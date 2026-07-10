@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Plant Disease Dashboard</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+    background:#0f172a;
+    color:white;
+    font-family:Arial, sans-serif;
+    text-align:center;
+}
+
+.dashboard{
+    width:95%;
+    margin:auto;
+    margin-top:30px;
+}
+
+.cards{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+    margin-bottom:40px;
+}
+
+.card{
+    background:#1e293b;
+    width:220px;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0px 0px 15px #00ff99;
+}
+
+.card h2{
+    color:#00ff99;
+    font-size:35px;
+}
+
+.chart-box{
+    width:500px;
+    margin:auto;
+    background:#1e293b;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0px 0px 15px #00ff99;
+}
+
+.table-box{
+    margin-top:40px;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:#1e293b;
+}
+
+th{
+    background:#00ff99;
+    color:black;
+    padding:12px;
+}
+
+td{
+    padding:10px;
+    border:1px solid #444;
+}
+
+tr:hover{
+    background:#334155;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:30px;
+    padding:12px 20px;
+    background:#00ff99;
+    color:black;
+    text-decoration:none;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<h1>📊 Plant Disease Detection Dashboard</h1>
+
+<div class="cards">
+
+<div class="card">
+<h2>{{ total }}</h2>
+<p>Total Predictions</p>
+</div>
+
+<div class="card">
+<h2>{{ healthy }}</h2>
+<p>Healthy Plants</p>
+</div>
+
+<div class="card">
+<h2>{{ early }}</h2>
+<p>Early Blight Cases</p>
+</div>
+
+<div class="card">
+<h2>{{ late }}</h2>
+<p>Late Blight Cases</p>
+</div>
+
+</div>
+
+<div class="chart-box">
+
+<h2>Disease Distribution</h2>
+
+<canvas id="diseaseChart"></canvas>
+
+</div>
+
+<div class="table-box">
+
+<h2>Prediction History</h2>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Disease</th>
+<th>Confidence (%)</th>
+<th>Date & Time</th>
+</tr>
+
+{% for row in rows %}
+
+<tr>
+
+<td>{{ row[0] }}</td>
+
+<td>{{ row[1] }}</td>
+
+<td>{{ row[2] }}</td>
+
+<td>{{ row[3] }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+<div style="margin-top:20px;">
+    <a href="{{ url_for('home') }}" class="btn">🏠 Back To Home</a>
+    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+</div>
+
+</div>
+
+<script>
+
+const ctx =
+document.getElementById('diseaseChart');
+
+new Chart(ctx, {
+
+type: 'pie',
+
+data: {
+
+labels: [
+
+'Healthy',
+
+'Early Blight',
+
+'Late Blight'
+
+],
+
+datasets: [{
+
+data: [
+
+{{ healthy }},
+
+{{ early }},
+
+{{ late }}
+
+],
+
+backgroundColor: [
+
+'#22c55e',
+
+'#f59e0b',
+
+'#ef4444'
+
+]
+
+}]
+
+}
+
+});
+
+</script>
+
+</body>
+</html>

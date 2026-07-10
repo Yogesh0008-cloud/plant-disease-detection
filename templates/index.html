@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plant Disease Detection</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div id="particles-js"></div>
+
+<div class="container">
+
+    <div class="top-nav">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+    <h1>🌱 Plant Disease Detection</h1>
+
+    <form action="{{ url_for('predict') }}"
+          method="POST"
+          enctype="multipart/form-data">
+
+        <input type="file"
+               name="leaf"
+               required>
+
+        <br><br>
+
+        <button type="submit">
+            Predict Disease
+        </button>
+
+    </form>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+<script>
+particlesJS("particles-js", {
+  "particles": {
+    "number": {
+      "value": 80
+    },
+    "color": {
+      "value": "#00ff99"
+    },
+    "shape": {
+      "type": "circle"
+    },
+    "opacity": {
+      "value": 0.5
+    },
+    "size": {
+      "value": 3
+    },
+    "line_linked": {
+      "enable": true,
+      "distance": 150,
+      "color": "#00ff99",
+      "opacity": 0.4,
+      "width": 1
+    },
+    "move": {
+      "enable": true,
+      "speed": 3
+    }
+  }
+});
+</script>
+
+</body>
+</html>
