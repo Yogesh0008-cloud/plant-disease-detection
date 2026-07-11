@@ -1,69 +1,436 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Prediction Result</title>
-<link rel="stylesheet"
-href="{{url_for('static',filename='style.css')}}">
+    <title>Prediction Result</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='result.css') }}">
 </head>
 
 <body>
 
-<div class="container">
 
-<h1>🌱 Prediction Result</h1>
 
-<img src="/uploads/{{image}}" width="250">
+<div class="result-container">
 
-<h2>{{ disease }}</h2>
+    <!-- Header -->
 
-<h2>{{ display_disease }}</h2>
+    <header class="result-header">
 
-<h3>Confidence: {{ confidence }}%</h3>
+        <h1>🌿 AI Plant Disease Detection</h1>
 
-<div style="
-width:100%;
-background:#444;
-border-radius:10px;
-height:25px;">
+        <p>Prediction Report</p>
 
-<div style="
-width:{{ confidence }}%;
-background:
-{% if confidence > 90 %}
-lime
-{% elif confidence > 70 %}
-orange
-{% else %}
-red
-{% endif %};
-height:25px;
-border-radius:10px;">
+    </header>
 
+    <!-- Hero Section -->
+
+    <section class="hero-result">
+
+        <!-- Uploaded Image -->
+
+        <div class="image-card">
+
+            <h2>📷 Uploaded Leaf</h2>
+
+            <img src="{{ url_for('uploaded_file', filename=image) }}"
+     alt="Uploaded Leaf">
+        </div>
+
+        <!-- Prediction -->
+
+        <div class="prediction-card">
+
+            <h2>Disease Detected</h2>
+
+            <h1>
+
+                {{ prediction }}
+
+            </h1>
+
+            <div class="confidence-box">
+
+                Confidence
+
+                <strong>
+
+                    {{ confidence }}%
+
+                </strong>
+
+            </div>
+
+            <div id="riskBadge"
+                 class="risk-badge">
+
+                Loading...
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- ===================================
+AI DIAGNOSIS REPORT
+=================================== -->
+
+<section class="diagnosis-section">
+
+    <h2 class="section-title">
+
+        📋 AI Diagnosis Report
+
+    </h2>
+
+    <div class="diagnosis-grid">
+
+        <div class="info-card">
+
+            <h3>📖 Disease Description</h3>
+
+            <p>
+
+                {{ description }}
+
+            </p>
+
+        </div>
+
+        <div class="info-card">
+
+            <h3>⚠ Possible Cause</h3>
+
+            <p>
+
+                {{ cause }}
+
+            </p>
+
+        </div>
+
+        <div class="info-card">
+
+            <h3>💊 Recommended Treatment</h3>
+
+            <p>
+
+                {{ treatment }}
+
+            </p>
+
+        </div>
+
+        <div class="info-card">
+
+            <h3>🛡 Risk Assessment</h3>
+
+            <p>
+
+                <strong id="riskText">
+
+                    {{ risk }}
+
+                </strong>
+
+            </p>
+
+            <hr>
+
+            <p>
+
+                <b>Report Generated</b>
+
+                <br>
+
+                {{ current_time }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ===================================
+AI CONFIDENCE CENTER
+=================================== -->
+
+<section class="confidence-section">
+
+    <h2 class="section-title">
+
+        🤖 AI Confidence Analysis
+
+    </h2>
+
+    <div class="confidence-grid">
+
+        <!-- Circular Gauge -->
+
+        <div class="confidence-card">
+
+            <div class="confidence-circle">
+
+                <svg width="220" height="220">
+
+                    <circle
+                        class="confidence-bg"
+                        cx="110"
+                        cy="110"
+                        r="90">
+                    </circle>
+
+                    <circle
+                        class="confidence-progress"
+                        id="confidenceProgress"
+                        cx="110"
+                        cy="110"
+                        r="90">
+                    </circle>
+
+                </svg>
+
+                <div class="confidence-text">
+
+                    <h1 id="confidenceValue">
+
+                        {{ confidence }}%
+
+                    </h1>
+
+                    <span>
+
+                        Confidence
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Progress -->
+
+        <div class="confidence-card">
+
+            <h3>
+
+                Prediction Confidence
+
+            </h3>
+
+            <div class="progress-bar">
+
+                <div id="confidenceBar"
+                     class="progress-fill">
+                </div>
+
+            </div>
+
+            <p>
+
+                AI Model Confidence Score
+
+            </p>
+
+            <h2>
+
+                {{ confidence }}%
+
+            </h2>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ===================================
+PLANT CARE CENTER
+=================================== -->
+
+<section class="care-section">
+
+    <h2 class="section-title">
+
+        🌱 Plant Care Center
+
+    </h2>
+
+    <div class="care-grid">
+
+        <div class="care-card">
+
+            <div class="care-icon">💧</div>
+
+            <h3>Watering</h3>
+
+            <p>
+
+                {{ care.watering }}
+
+            </p>
+
+        </div>
+
+        <div class="care-card">
+
+            <div class="care-icon">☀️</div>
+
+            <h3>Sunlight</h3>
+
+            <p>
+
+                {{ care.sunlight }}
+
+            </p>
+
+        </div>
+
+        <div class="care-card">
+
+            <div class="care-icon">🌡️</div>
+
+            <h3>Temperature</h3>
+
+            <p>
+
+                {{ care.temperature }}
+
+            </p>
+
+        </div>
+
+        <div class="care-card">
+
+            <div class="care-icon">🌾</div>
+
+            <h3>Fertilizer</h3>
+
+            <p>
+
+                {{ care.fertilizer }}
+
+            </p>
+
+        </div>
+
+        <div class="care-card">
+
+            <div class="care-icon">📅</div>
+
+            <h3>Next Inspection</h3>
+
+            <p>
+
+                {{ care.inspection }}
+
+            </p>
+
+        </div>
+
+        <div class="care-card">
+
+            <div class="care-icon">🛡️</div>
+
+            <h3>Prevention</h3>
+
+            <p>
+               {{ care.prevention }} 
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ===================================
+AI RECOMMENDATION
+=================================== -->
+
+<section class="recommend-section">
+
+    <h2 class="section-title">
+
+        🤖 AI Recommendation
+
+    </h2>
+
+    <div class="recommend-card">
+
+        <div class="ai-icon">
+
+            🤖
+
+        </div>
+
+        <h3>
+
+            AI Analysis Complete
+
+        </h3>
+
+        <p>
+
+            The uploaded potato leaf has been analyzed using
+            the MobileNetV2 deep learning model.
+
+        </p>
+
+        <div id="recommendMessage"
+             class="recommend-message">
+
+        </div>
+
+        <div class="recommend-actions">
+
+            <div class="action-item">
+
+                ✔ Save Report
+
+            </div>
+
+            <div class="action-item">
+
+                ✔ Monitor Crop
+
+            </div>
+
+            <div class="action-item">
+
+                ✔ Follow Treatment
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<a href="{{ url_for('report') }}"
+class="action-item">
+
+📄 Download PDF
+
+</a>
 </div>
 
-</div>
+<script>
 
-<br>
+const confidence =
+{{ confidence|float }};
 
-<h2>Cause</h2>
-<p>{{ cause }}</p>
-<h2>Risk-Level</h2>
-<p>{{risk}}</p>
-<p>{{ treatment }}</p>
-<h2>Description</h2>
-<p>{{ description }}</p>
-<h2>Predicton Time</h2>
-<p>{{current_time}}</p>
+</script>
 
-<a href="{{ url_for('dashboard') }}">View Dashboard</a>
-<br><br>
-<a href="{{ url_for('report') }}">Download Report</a>
-<br><br>
-<a href="{{ url_for('home') }}">Check Another Leaf</a>
-<br><br>
-<a href="{{ url_for('logout') }}">Logout</a>
-
-</div>
+<script src="{{ url_for('static',
+filename='result.js') }}"></script>
 
 </body>
+
+
 </html>

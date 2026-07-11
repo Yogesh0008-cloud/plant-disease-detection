@@ -1,17 +1,238 @@
-{% extends "base_auth.html" %}
+<!DOCTYPE html>
+<html>
+<head>
 
-{% block content %}
-<div class="auth-container">
-    <h1>Login</h1>
+    <title>Login</title>
 
-    <form action="{{ url_for('login_user') }}" method="POST">
-        <input class="auth-input" type="text" name="username" placeholder="Username" required>
-        <input class="auth-input" type="password" name="password" placeholder="Password" required>
-        <button type="submit">Login</button>
-    </form>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='login.css') }}">
 
-    <p>
-        Don't have an account? <a href="{{ url_for('register_page') }}">Register</a>
-    </p>
+</head>
+
+<body>
+
+<div id="particles-js"></div>
+
+<div class="login-wrapper">
+
+    <!-- LEFT PANEL -->
+
+    <div class="login-left">
+
+        <div class="hero-content">
+
+            <h1>
+
+                🌿 AI Plant Disease Detection
+
+            </h1>
+
+            <p>
+
+                Intelligent disease diagnosis powered by
+                Artificial Intelligence using MobileNetV2.
+
+            </p>
+
+            <div class="hero-features">
+
+                <div class="feature-card">
+
+                    🤖 AI Powered
+
+                </div>
+
+                <div class="feature-card">
+
+                    🎯 95% Accuracy
+
+                </div>
+
+                <div class="feature-card">
+
+                    ⚡ Instant Detection
+
+                </div>
+
+                <div class="feature-card">
+
+                    📄 Smart Reports
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT PANEL -->
+
+    <div class="login-right">
+
+        <div class="login-card">
+
+<p>Welcome back! Please login to your account.</p>
+            <div class="system-status">
+
+    <span class="status-dot"></span>
+
+    AI System Online
+
 </div>
-{% endblock %}
+
+        <form
+action="{{ url_for('login_user') }}"
+method="POST">
+
+    <div class="input-group">
+
+        <span class="input-icon">
+
+            👤
+
+        </span>
+
+        <input
+        type="text"
+        name="username"
+        placeholder="Username"
+        required>
+
+    </div>
+
+    <div class="input-group">
+
+        <span class="input-icon">
+
+            🔒
+
+        </span>
+
+        <input
+        id="password"
+        type="password"
+        name="password"
+        placeholder="Password"
+        required>
+
+        <span
+        class="toggle-password"
+        id="togglePassword">
+
+            👁
+
+        </span>
+
+    </div>
+
+    <div class="login-options">
+
+    <label class="remember-me">
+
+        <input
+        type="checkbox"
+        name="remember">
+
+        Remember Me
+
+    </label>
+
+    <a
+href="#"
+class="forgot-link"
+id="forgotPassword">
+
+    Forgot Password?
+
+</a>
+
+</div>
+
+<button
+type="submit"
+class="login-btn"
+id="loginBtn">
+
+    Login
+
+</button>
+</form>
+
+        <div class="bottom-text">
+
+            Don't have an account?
+
+            <a href="{{ url_for('register_page') }}">
+
+                Register
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ===========================
+FORGOT PASSWORD MODAL
+=========================== -->
+
+<div
+class="modal"
+id="forgotModal">
+
+    <div class="modal-box">
+
+        <div class="modal-icon">
+
+            🔒
+
+        </div>
+
+        <h2>
+
+            Password Recovery
+
+        </h2>
+
+        <p>
+
+            Password recovery is not available
+            in this version.
+
+            <br><br>
+
+            Please contact the administrator.
+
+        </p>
+
+        <button
+        id="closeModal">
+
+            OK
+
+        </button>
+
+    </div>
+
+</div>
+
+<footer class="login-footer">
+
+    © 2026 AI Plant Disease Detection
+
+    <br>
+
+    Developed by <b>Yogesh Singh Bisht</b>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+<script src="{{ url_for('static', filename='login.js') }}"></script>
+
+
+
+</body>
+</html>

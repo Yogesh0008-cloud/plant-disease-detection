@@ -6,103 +6,131 @@
 
 <link rel="stylesheet"
 href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet"
+href="{{ url_for('static', filename='dashboard.css') }}">
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<style>
 
-body{
-    background:#0f172a;
-    color:white;
-    font-family:Arial, sans-serif;
-    text-align:center;
-}
-
-.dashboard{
-    width:95%;
-    margin:auto;
-    margin-top:30px;
-}
-
-.cards{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:20px;
-    margin-bottom:40px;
-}
-
-.card{
-    background:#1e293b;
-    width:220px;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0px 0px 15px #00ff99;
-}
-
-.card h2{
-    color:#00ff99;
-    font-size:35px;
-}
-
-.chart-box{
-    width:500px;
-    margin:auto;
-    background:#1e293b;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0px 0px 15px #00ff99;
-}
-
-.table-box{
-    margin-top:40px;
-    overflow-x:auto;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    background:#1e293b;
-}
-
-th{
-    background:#00ff99;
-    color:black;
-    padding:12px;
-}
-
-td{
-    padding:10px;
-    border:1px solid #444;
-}
-
-tr:hover{
-    background:#334155;
-}
-
-.btn{
-    display:inline-block;
-    margin-top:30px;
-    padding:12px 20px;
-    background:#00ff99;
-    color:black;
-    text-decoration:none;
-    border-radius:10px;
-    font-weight:bold;
-}
-
-</style>
 
 </head>
 
 <body>
+<div class="dashboard-bg"></div>
+<div class="dashboard-wrapper">
 
-<div class="dashboard">
+<!-- ===========================
+NAVBAR
+============================ -->
 
-<h1>📊 Plant Disease Detection Dashboard</h1>
+<nav class="dashboard-navbar">
+
+<div class="brand">
+
+🌿 AI Plant Disease Detection
+
+</div>
+
+<div class="nav-right">
+<span id="liveTime"></span>
+
+<button id="themeToggle" class="theme-btn">
+
+🌙
+
+</button>
+
+<button class="notify-btn">
+
+🔔
+
+<span class="notify-dot"></span>
+
+</button>
+<a href="{{ url_for('home') }}">
+
+🏠 Home
+
+</a>
+
+<a href="{{ url_for('logout') }}">
+
+🚪 Logout
+
+</a>
+
+</div>
+
+</nav>
+<nav class="dashboard-menu">
+
+    <a href="#profile">👤 Profile</a>
+
+    <a href="#weekly">📅 Weekly</a>
+
+    <a href="#health">🌿 Health</a>
+
+    <a href="#gauge">📊 Gauge</a>
+
+    <a href="#system">🤖 AI Info</a>
+
+    <a href="#actions">⚡ Actions</a>
+
+</nav>
+
+<!-- ===========================
+WELCOME
+============================ -->
+
+<section class="welcome-section">
+
+<div>
+
+<h1>
+
+📊 AI Analytics Dashboard
+
+</h1>
+
+<p>
+
+Welcome back!
+
+Monitor AI predictions, disease trends,
+and plant health analytics in real time.
+
+</p>
+
+</div>
+
+<div class="status-box">
+
+<div>
+
+🟢
+
+</div>
+
+<div>
+
+System Status
+
+<br>
+
+<b>Online</b>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ===========================
+STATISTICS
+============================ -->
+
 
 <div class="cards">
-
 <div class="card">
 <h2>{{ total }}</h2>
 <p>Total Predictions</p>
@@ -122,107 +150,710 @@ tr:hover{
 <h2>{{ late }}</h2>
 <p>Late Blight Cases</p>
 </div>
+</div>
+<!-- ==========================
+AI Analytics
+========================== -->
+
+<section class="analytics-section">
+
+    <div class="section-title">
+
+        <h2>📈 AI Analytics</h2>
+
+        <p>
+            Visual overview of disease prediction statistics.
+        </p>
+
+    </div>
+
+    <div class="charts-grid">
+
+        <div class="chart-card">
+
+            <h3>Disease Distribution</h3>
+
+            <canvas id="diseaseChart"></canvas>
+
+        </div>
+
+        <div class="chart-card">
+
+            <h3>Prediction Accuracy</h3>
+
+            <canvas id="accuracyChart"></canvas>
+
+        </div>
+
+        <div class="chart-card">
+
+            <h3>Model Performance</h3>
+
+            <canvas id="performanceChart"></canvas>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ===========================
+AI INSIGHTS
+=========================== -->
+
+<section class="insight-section">
+
+<h2 class="section-title">
+
+🤖 AI Insights
+
+</h2>
+
+<div class="insight-grid">
+
+<!-- Most Disease -->
+
+<div class="insight-card">
+
+<h3>🔥 Most Detected Disease</h3>
+
+<h1 id="topDisease">
+
+Loading...
+
+</h1>
 
 </div>
 
-<div class="chart-box">
+<!-- Healthy Percentage -->
 
-<h2>Disease Distribution</h2>
+<div class="insight-card">
 
-<canvas id="diseaseChart"></canvas>
+<h3>🌿 Healthy Percentage</h3>
 
-</div>
+<h1 id="healthyPercent">
 
-<div class="table-box">
+0%
 
-<h2>Prediction History</h2>
-
-<table>
-
-<tr>
-<th>ID</th>
-<th>Disease</th>
-<th>Confidence (%)</th>
-<th>Date & Time</th>
-</tr>
-
-{% for row in rows %}
-
-<tr>
-
-<td>{{ row[0] }}</td>
-
-<td>{{ row[1] }}</td>
-
-<td>{{ row[2] }}</td>
-
-<td>{{ row[3] }}</td>
-
-</tr>
-
-{% endfor %}
-
-</table>
+</h1>
 
 </div>
 
-<div style="margin-top:20px;">
-    <a href="{{ url_for('home') }}" class="btn">🏠 Back To Home</a>
-    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+<!-- AI Status -->
+
+<div class="insight-card">
+
+<h3>🟢 AI System</h3>
+
+<h1>
+
+ONLINE
+
+</h1>
+
+<p>
+
+Model Loaded Successfully
+
+</p>
+
+</div>
+
+<!-- Recommendation -->
+
+<div class="insight-card">
+
+<h3>💡 Recommendation</h3>
+
+<p id="recommendation">
+
+Loading Recommendation...
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+<section class="progress-card">
+
+<h2>
+
+📈 Prediction Progress
+
+</h2>
+
+<p>
+
+Healthy
+
+</p>
+
+<div class="progress">
+
+<div
+class="progress-bar"
+
+id="healthyBar">
+
+</div>
+
+</div>
+
+<p>
+
+Early Blight
+
+</p>
+
+<div class="progress">
+
+<div
+class="progress-bar"
+
+id="earlyBar">
+
+</div>
+
+</div>
+
+<p>
+
+Late Blight
+
+</p>
+
+<div class="progress">
+
+<div
+class="progress-bar"
+
+id="lateBar">
+
+</div>
+
+</div>
+
+</section>
+<!-- ==========================
+USER PROFILE
+========================== -->
+
+<section class="profile-section" id="profile">
+
+<h2 class="section-title">
+
+👤 User Profile
+
+</h2>
+
+<div class="profile-card">
+
+<div class="profile-avatar" id="profileAvatar">
+
+{{ initials }}
+
+</div>
+
+<div class="profile-info">
+
+<h3>
+
+{{ username }}
+
+</h3>
+
+<p>
+
+🟢 Active User
+
+</p>
+
+</div>
+
+<div class="profile-stats">
+
+<div>
+
+<h4>Total Predictions</h4>
+
+<span>{{ total }}</span>
+
+</div>
+
+<div>
+
+<h4>Healthy Plants</h4>
+
+<span>{{ healthy }}</span>
+
+</div>
+
+<div>
+
+<h4>Diseased Plants</h4>
+
+<span>{{ early + late }}</span>
+
+</div>
+
+<div>
+
+<h4>AI Health Score</h4>
+
+<span id="healthScore">
+
+0%
+
+</span>
+
+</div>
+
+</div>
+
+<div class="profile-badge">
+
+🏆 AI Plant Specialist
+
+</div>
+
+</div>
+
+</section>
+<!-- ==========================
+WEEKLY ANALYTICS
+========================== -->
+
+<section class="weekly-section" id="weekly">
+
+<h2 class="section-title">
+
+📅 Weekly Analytics
+
+</h2>
+
+<div class="weekly-grid">
+
+<div class="analytics-card">
+
+<h3>
+
+📈 Weekly Prediction Trend
+
+</h3>
+
+<canvas id="weeklyChart"></canvas>
+
+</div>
+
+<div class="analytics-card">
+
+<h3>
+
+🌿 Plant Health Summary
+
+</h3>
+
+<div class="health-summary">
+
+<div class="summary-item">
+
+<h4>Healthy</h4>
+
+<div class="summary-value">
+
+{{ healthy }}
+
+</div>
+
+</div>
+
+<div class="summary-item">
+
+<h4>Diseased</h4>
+
+<div class="summary-value">
+
+{{ early + late }}
+
+</div>
+
+</div>
+
+<div class="summary-item">
+
+<h4>Total</h4>
+
+<div class="summary-value">
+
+{{ total }}
+
+</div>
+
 </div>
 
 </div>
 
+</div>
+
+</div>
+
+</section>
+<!-- ==================================
+PLANT HEALTH CENTER
+=================================== -->
+
+<section class="plant-health-section" id="health">
+
+    <h2 class="section-title">
+        🌿 Plant Health Center
+    </h2>
+
+    <div class="plant-grid">
+
+        <div class="plant-card healthy-card">
+
+            <h3>🌱 Healthy</h3>
+
+            <div class="plant-value" id="healthyPercentage">
+                0%
+            </div>
+
+            <div class="mini-progress">
+
+                <div id="healthyMiniBar"
+                     class="mini-fill healthy-fill">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="plant-card early-card">
+
+            <h3>🍂 Early Blight</h3>
+
+            <div class="plant-value" id="earlyPercentage">
+                0%
+            </div>
+
+            <div class="mini-progress">
+
+                <div id="earlyMiniBar"
+                     class="mini-fill early-fill">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="plant-card late-card">
+
+            <h3>🍁 Late Blight</h3>
+
+            <div class="plant-value" id="latePercentage">
+                0%
+            </div>
+
+            <div class="mini-progress">
+
+                <div id="lateMiniBar"
+                     class="mini-fill late-fill">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="plant-card recommendation-card">
+
+            <h3>🤖 AI Recommendation</h3>
+
+            <p id="plantRecommendation">
+
+                Loading recommendation...
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ==========================
+PLANT HEALTH GAUGE
+========================== -->
+
+<section class="gauge-section" id="gauge">
+
+    <h2 class="section-title">
+
+        🌿 Overall Plant Health
+
+    </h2>
+
+    <div class="gauge-card">
+
+        <div class="gauge">
+
+            <svg width="220" height="220">
+
+                <circle
+                    class="gauge-bg"
+                    cx="110"
+                    cy="110"
+                    r="90">
+                </circle>
+
+                <circle
+                    class="gauge-progress"
+                    id="gaugeProgress"
+                    cx="110"
+                    cy="110"
+                    r="90">
+                </circle>
+
+            </svg>
+
+            <div class="gauge-text">
+
+                <h1 id="gaugeValue">
+
+                    0%
+
+                </h1>
+
+                <span id="gaugeStatus">
+
+                    Loading...
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ==================================
+MODEL & SYSTEM STATUS
+================================== -->
+
+<section class="system-section" id="system">
+
+    <h2 class="section-title">
+
+        🤖 AI System Information
+
+    </h2>
+
+    <div class="system-grid">
+
+        <!-- AI Model -->
+
+        <div class="system-card">
+
+            <h3>🧠 AI Model</h3>
+
+            <div class="system-row">
+
+                <span>Model</span>
+
+                <strong>MobileNetV2</strong>
+
+            </div>
+
+            <div class="system-row">
+
+                <span>Framework</span>
+
+                <strong>TensorFlow</strong>
+
+            </div>
+
+            <div class="system-row">
+
+                <span>Classes</span>
+
+                <strong>3</strong>
+
+            </div>
+
+            <div class="system-row">
+
+                <span>Accuracy</span>
+
+                <strong>95%</strong>
+
+            </div>
+
+            <div class="system-row">
+
+                <span>Input Size</span>
+
+                <strong>224 × 224</strong>
+
+            </div>
+
+        </div>
+
+        <!-- System Status -->
+
+        <div class="system-card">
+
+            <h3>💻 System Status</h3>
+
+            <div class="system-row">
+
+                <span>Application</span>
+
+                <span class="status online">
+                    🟢 Running
+                </span>
+
+            </div>
+
+            <div class="system-row">
+
+                <span>Database</span>
+
+                <span class="status online">
+                    🟢 Connected
+                </span>
+
+            </div>
+
+            <div class="system-row">
+
+                <span>AI Model</span>
+
+                <span class="status online">
+                    🟢 Loaded
+                </span>
+
+            </div>
+
+            <div class="system-row">
+
+                <span>User Session</span>
+
+                <span class="status online">
+                    🟢 Active
+                </span>
+
+            </div>
+
+            <div class="system-row">
+
+                <span>Dashboard</span>
+
+                <span class="status online">
+                    🟢 Online
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ==================================
+QUICK ACTIONS
+================================== -->
+
+<section class="quick-actions-section" id="actions">
+
+    <h2 class="section-title">
+
+        ⚡ Quick Actions
+
+    </h2>
+
+    <div class="quick-grid">
+
+        <a href="{{ url_for('home') }}" class="quick-card">
+
+            <div class="quick-icon">📷</div>
+
+            <h3>Predict Disease</h3>
+
+            <p>Upload a new potato leaf image.</p>
+
+        </a>
+
+        <a href="{{ url_for('dashboard') }}" class="quick-card">
+
+            <div class="quick-icon">📊</div>
+
+            <h3>Dashboard</h3>
+
+            <p>Refresh analytics dashboard.</p>
+
+        </a>
+
+        <a href="javascript:window.print()" class="quick-card">
+
+            <div class="quick-icon">📄</div>
+
+            <h3>Download Report</h3>
+
+            <p>Save this dashboard as PDF.</p>
+
+        </a>
+
+        <a href="{{ url_for('logout') }}" class="quick-card">
+
+            <div class="quick-icon">🚪</div>
+
+            <h3>Logout</h3>
+
+            <p>Securely sign out.</p>
+
+        </a>
+
+    </div>
+
+</section>
+<footer class="dashboard-footer">
+
+    <h2>
+
+        🌿 AI Plant Disease Detection
+
+    </h2>
+
+    <p>
+
+        Powered by Flask • TensorFlow • MobileNetV2 • SQLite
+
+    </p>
+
+    <p>
+
+        Developed by <strong>Yogesh Singh Bisht</strong>
+
+    </p>
+
+    <p>
+
+        © 2026 All Rights Reserved
+
+    </p>
+
+</footer>
 <script>
+const dashboardData = {
 
-const ctx =
-document.getElementById('diseaseChart');
+    healthy: {{ healthy }},
+    early: {{ early }},
+    late: {{ late }},
+    total: {{ total }}
 
-new Chart(ctx, {
-
-type: 'pie',
-
-data: {
-
-labels: [
-
-'Healthy',
-
-'Early Blight',
-
-'Late Blight'
-
-],
-
-datasets: [{
-
-data: [
-
-{{ healthy }},
-
-{{ early }},
-
-{{ late }}
-
-],
-
-backgroundColor: [
-
-'#22c55e',
-
-'#f59e0b',
-
-'#ef4444'
-
-]
-
-}]
-
-}
-
-});
-
+};
 </script>
+<script src="{{ url_for('static', filename='dashboard.js') }}"></script>
 
 </body>
 </html>

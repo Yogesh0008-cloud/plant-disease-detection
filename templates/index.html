@@ -8,25 +8,98 @@
 </head>
 
 <body>
+  
+
+<nav class="navbar">
+    <div class="logo">
+        🌿 AI Plant Disease Detection
+    </div>
+
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+
+
 
 <div id="particles-js"></div>
 
 <div class="container">
 
-    <div class="top-nav">
-        <a href="{{ url_for('dashboard') }}">Dashboard</a>
-        <a href="{{ url_for('logout') }}">Logout</a>
+    <section class="hero">
+
+    <span class="ai-badge">
+        🤖 AI Powered • MobileNetV2 Transfer Learning
+    </span>
+
+    <h1>
+        Smart Plant Disease Detection
+    </h1>
+
+    <p>
+        Upload a potato leaf image and let Artificial Intelligence
+        instantly identify diseases, calculate confidence,
+        analyze risk level, and recommend suitable treatments.
+    </p>
+
+    <div class="hero-stats">
+
+        <div class="hero-card">
+            <h2>95%</h2>
+            <span>Accuracy</span>
+        </div>
+
+        <div class="hero-card">
+            <h2>3</h2>
+            <span>Disease Classes</span>
+        </div>
+
+        <div class="hero-card">
+            <h2>24/7</h2>
+            <span>Available</span>
+        </div>
+
     </div>
 
-    <h1>🌱 Plant Disease Detection</h1>
+</section>
+<h2 class="upload-title">
+    Upload Potato Leaf Image
+</h2>
 
     <form action="{{ url_for('predict') }}"
           method="POST"
           enctype="multipart/form-data">
 
-        <input type="file"
-               name="leaf"
-               required>
+        <div class="drop-zone" id="dropZone">
+
+    <img id="previewImage"
+         src=""
+         style="display:none;">
+
+    <p id="dropText">
+
+        📂 Drag & Drop Leaf Image
+
+        <br><br>
+
+        <span>
+            OR
+        </span>
+
+        <br><br>
+
+        Click Here To Browse
+
+    </p>
+
+    
+
+    <input type="file" name="leaf" id="leafInput" accept="image/*" hidden required>
+
+</div>
 
         <br><br>
 
@@ -38,40 +111,104 @@
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
-<script>
-particlesJS("particles-js", {
-  "particles": {
-    "number": {
-      "value": 80
-    },
-    "color": {
-      "value": "#00ff99"
-    },
-    "shape": {
-      "type": "circle"
-    },
-    "opacity": {
-      "value": 0.5
-    },
-    "size": {
-      "value": 3
-    },
-    "line_linked": {
-      "enable": true,
-      "distance": 150,
-      "color": "#00ff99",
-      "opacity": 0.4,
-      "width": 1
-    },
-    "move": {
-      "enable": true,
-      "speed": 3
-    }
-  }
-});
-</script>
+<!-- FEATURES -->
+
+<section class="features">
+
+    <h2>Why Choose Our AI?</h2>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            🤖
+            <h3>AI Powered</h3>
+            <p>
+                MobileNetV2 Transfer Learning
+                for accurate disease prediction.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            ⚡
+            <h3>Fast Detection</h3>
+            <p>
+                Upload an image and receive
+                results in seconds.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            📊
+            <h3>Analytics Dashboard</h3>
+            <p>
+                View prediction history,
+                statistics and reports.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            📄
+            <h3>PDF Report</h3>
+            <p>
+                Generate professional
+                downloadable reports.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- HOW IT WORKS -->
+
+<section class="steps">
+
+<h2>How It Works</h2>
+
+<div class="step-grid">
+
+<div class="step-card">
+<h1>1</h1>
+<p>Upload Leaf Image</p>
+</div>
+
+<div class="step-card">
+<h1>2</h1>
+<p>AI Predicts Disease</p>
+</div>
+
+<div class="step-card">
+<h1>3</h1>
+<p>View Treatment</p>
+</div>
+
+<div class="step-card">
+<h1>4</h1>
+<p>Download Report</p>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+© 2026 AI Plant Disease Detection System
+
+<br>
+
+Developed using Flask • TensorFlow • MobileNetV2
+
+</footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+
+
 
 </body>
 </html>
