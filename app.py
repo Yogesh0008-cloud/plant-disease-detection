@@ -186,8 +186,9 @@ def predict():
         secure_filename(file.filename)
     )
 
-    path = os.path.join("uploads", filename)
-
+    upload_folder=os.path.join(app.root_path, 'uploads')
+    os.makedirs(upload_folder, exist_ok=True)
+    path = os.path.join(upload_folder, filename)
     file.save(path)
 
     # Read image
